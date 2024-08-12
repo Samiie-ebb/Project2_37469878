@@ -6,6 +6,9 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Project2_WebAPI.Models;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Collections.Generic;
 
 namespace Project2_WebAPI.Controllers
 {
@@ -42,7 +45,6 @@ namespace Project2_WebAPI.Controllers
         }
 
         // PUT: api/JobTelemetries/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
         public async Task<IActionResult> PutJobTelemetry(int id, JobTelemetry jobTelemetry)
         {
@@ -73,7 +75,6 @@ namespace Project2_WebAPI.Controllers
         }
 
         // POST: api/JobTelemetries
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
         public async Task<ActionResult<JobTelemetry>> PostJobTelemetry(JobTelemetry jobTelemetry)
         {
@@ -99,9 +100,55 @@ namespace Project2_WebAPI.Controllers
             return NoContent();
         }
 
+        // Private method to check if a telemetry entry exists by ID
         private bool JobTelemetryExists(int id)
         {
             return _context.JobTelemetries.Any(e => e.Id == id);
         }
+
+        // GET: api/JobTelemetries/GetSavingsByProject
+        [HttpGet("GetSavingsByProject")]
+        public async Task<ActionResult<IEnumerable<SavingsResult>>> GetSavingsByProject(int projectId, DateTime startDate, DateTime endDate)
+        {
+            var savings = await _context.JobTelemetries
+                .Where(t => t.ProjectId == projectId && t.Timestamp >= startDate && t.Timestamp <= endDate)
+                .GroupBy(t => t.ProjectId)
+                .Select(g => new SavingsResult
+                {
+                    ProjectId = g.Key,
+                    TotalTimeSaved = g.Sum(t => t.TimeSaved),
+                    TotalCostSaved = g.Sum(t => t.CostSaved)
+                }).ToListAsync();
+
+            return Ok(savings);
+        }
+
+        // GET: api/JobTelemetries/GetSavingsByClient
+        [HttpGet("GetSavingsByClient")]
+        public async Task<ActionResult<IEnumerable<SavingsResult>>> GetSavingsByClient(int clientId, DateTime startDate, DateTime endDate)
+        {
+            var savings = await _context.JobTelemetries
+                .Where(t => t.ClientId == clientId && t.Timestamp >= startDate && t.Timestamp <= endDate)
+                .GroupBy(t => t.ClientId)
+                .Select(g => new SavingsResult
+                {
+                    ClientId = g.Key,
+                    TotalTimeSaved = g.Sum(t => t.TimeSaved),
+                    TotalCostSaved = g.Sum(t => t.CostSaved)
+                }).ToListAsync();
+
+            return Ok(savings);
+        }
+    }
+
+    // Define a model for returning the savings result
+    public class SavingsResult
+    {
+        public int ProjectId { get; set; }
+        public double TotalTimeSaved { get; set; }
+        public double TotalCostSaved { get; set; }
+
+        public int ClientId { get; set; }
     }
 }
+

@@ -18,5 +18,10 @@ namespace Project2_WebAPI.Models
         public bool? ExcludeFromTimeSaving { get; set; }
         public string? AdditionalInfo { get; set; }
         public DateTime EntryDate { get; set; }
+        public int ProjectId { get; set; }
+        public int ClientId { get; set; }
+        public DateTime Timestamp { get; set; }
+        public double TimeSaved { get; set; }
+        public double CostSaved { get; set; }
     }
 }
