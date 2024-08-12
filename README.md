@@ -42,10 +42,16 @@ If you have any questions or need help, feel free to reach out to us at samantha
 **Tools I used to complete this project**:
 
 ChatGPT. (2024). Assistance with .NET Web API project. OpenAI. Available at: https://www.openai.com/chatgpt (Accessed: 10/08/2024).
+
 Meta, A. (2024). Consultation on .NET Web API development. [Personal communication] (12/08/2024).
+
 Efundi. (2024). Efundi Portal - Resources for .NET Web API project. [Online]. Available at: https://efundi.youruniversity.edu (Accessed: 11/08/2024).
+
 CMPG 323 IT Developments. (2024). YouTube Channel: CMPG 323 IT Developments. [Online Video]. Available at: https://www.youtube.com/channel/yourchannel (Accessed: 11/08/2024).
+
 Smith, J. (2024). Introduction to .NET Web APIs. [Online]. Available at: https://example.com/dotnet-web-api (Accessed: 09/08/2024).
+
 Johnson, L. (2024). Getting Started with Entity Framework Core. [Online]. Available at: https://example.com/entity-framework-core (Accessed: 11/08/2024).
+
 Microsoft Docs. (2024). .NET Documentation. [Online]. Available at: https://docs.microsoft.com/dotnet (Accessed: 07/08/2024).
 
